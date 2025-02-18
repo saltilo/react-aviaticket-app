@@ -1,0 +1,15 @@
+@import "../../styles/mixins";
+
+.header {
+  @include flex-center;
+  height: 100px;
+
+  &__icon {
+    font-size: 40px;
+    background: $primary-color;
+    color: $secondary-color;
+    padding: 20px;
+    border-radius: 50%;
+    box-shadow: $box-shadow;
+  }
+}

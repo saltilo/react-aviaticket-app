@@ -1,0 +1,35 @@
+@import "../../styles/variables";
+
+.tabs {
+  display: flex;
+  background: $secondary-color;
+  border-radius: $border-radius;
+  box-shadow: $box-shadow;
+  overflow: hidden;
+  margin-bottom: 20px;
+  width: 100%;
+  width: 500px;
+
+  .btn {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    text-align: center;
+    transition: 0.3s;
+    text-transform: uppercase;
+    font-size: 12px;
+    line-height: 20px;
+    letter-spacing: 0.5px;
+
+    &.active {
+      background: $primary-color;
+      color: $secondary-color;
+    }
+
+    &:hover {
+      background: lighten($primary-color, 10%);
+    }
+  }
+}
