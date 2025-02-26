@@ -14,16 +14,16 @@ const mockTickets = [
       {
         origin: "MOW",
         destination: "NKT",
-        departureTime: "10:45",
-        arrivalTime: "08:00",
+        departureTime: "2024-02-26T10:45:00",
+        arrivalTime: "2024-02-26T08:00:00",
         duration: "21ч 15м",
         transfers: ["HKG", "JNB"],
       },
       {
         origin: "MOW",
         destination: "NKT",
-        departureTime: "11:20",
-        arrivalTime: "00:50",
+        departureTime: "2024-02-26T11:20:00",
+        arrivalTime: "2024-02-26T00:50:00",
         duration: "13ч 30м",
         transfers: ["HKG"],
       },
@@ -39,8 +39,8 @@ const mockTickets = [
       {
         origin: "MOW",
         destination: "JFK",
-        departureTime: "09:30",
-        arrivalTime: "16:50",
+        departureTime: "2024-02-26T09:30:00",
+        arrivalTime: "2024-02-26T16:50:00",
         duration: "10ч 20м",
         transfers: [],
       },
@@ -56,8 +56,8 @@ const mockTickets = [
       {
         origin: "MOW",
         destination: "LAX",
-        departureTime: "06:10",
-        arrivalTime: "18:45",
+        departureTime: "2024-02-26T06:10:00",
+        arrivalTime: "2024-02-26T18:45:00",
         duration: "14ч 35м",
         transfers: ["FRA"],
       },
@@ -73,78 +73,10 @@ const mockTickets = [
       {
         origin: "MOW",
         destination: "BER",
-        departureTime: "15:20",
-        arrivalTime: "18:45",
+        departureTime: "2024-02-26T15:20:00",
+        arrivalTime: "2024-02-26T18:45:00",
         duration: "3ч 25м",
         transfers: [],
-      },
-    ],
-  },
-  {
-    id: 5,
-    price: 9700,
-    airline: "Qatar Airways",
-    airlineLogo:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8f/Qatar_Airways_Logo.svg/2560px-Qatar_Airways_Logo.svg.png",
-    flights: [
-      {
-        origin: "MOW",
-        destination: "SYD",
-        departureTime: "21:00",
-        arrivalTime: "10:30",
-        duration: "18ч 30м",
-        transfers: ["DOH"],
-      },
-    ],
-  },
-  {
-    id: 6,
-    price: 11900,
-    airline: "Turkish Airlines",
-    airlineLogo:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Turkish_Airlines_logo_2019.svg/2560px-Turkish_Airlines_logo_2019.svg.png",
-    flights: [
-      {
-        origin: "MOW",
-        destination: "BKK",
-        departureTime: "23:50",
-        arrivalTime: "14:10",
-        duration: "12ч 20м",
-        transfers: ["IST"],
-      },
-    ],
-  },
-  {
-    id: 7,
-    price: 16800,
-    airline: "Emirates",
-    airlineLogo:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/Emirates_logo.svg/2560px-Emirates_logo.svg.png",
-    flights: [
-      {
-        origin: "MOW",
-        destination: "MEL",
-        departureTime: "05:40",
-        arrivalTime: "22:15",
-        duration: "23ч 35м",
-        transfers: ["DXB", "SIN", "PER"],
-      },
-    ],
-  },
-  {
-    id: 8,
-    price: 18500,
-    airline: "Singapore Airlines",
-    airlineLogo:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Singapore_Airlines_Logo.svg/2560px-Singapore_Airlines_Logo.svg.png",
-    flights: [
-      {
-        origin: "MOW",
-        destination: "MEL",
-        departureTime: "08:00",
-        arrivalTime: "18:30",
-        duration: "10ч 30м",
-        transfers: ["SIN", "KUL", "SYD"],
       },
     ],
   },

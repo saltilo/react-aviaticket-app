@@ -1,14 +1,14 @@
 @import "../../../styles/variables";
 
 .ticketCard {
-  background: white;
-  padding: 16px;
-  border-radius: 8px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-  margin-bottom: 12px;
+  background: #fff;
+  border-radius: $border-radius;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 20px;
+  padding: 20px;
+  transition: box-shadow 0.2s ease-in-out;
 }
 
 .ticketHeader {
@@ -18,11 +18,8 @@
 }
 
 .price {
-  font-family: Open Sans;
-  font-weight: 600;
   font-size: 24px;
-  line-height: 24px;
-  letter-spacing: 0px;
+  font-weight: 600;
   color: $primary-color;
 }
 
@@ -30,40 +27,64 @@
   height: 30px;
 }
 
-.flightInfo {
-  padding-top: 8px;
+.segments {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 10px;
+  list-style: none;
+  padding: 0;
+}
+
+.segment {
+  display: grid;
+  grid-template-areas:
+    "route duration-title stops-count"
+    "time duration stops-cities";
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: minmax(18px, auto) minmax(21px, auto);
+  font-weight: 600;
 }
 
 .route {
-  display: flex;
-  justify-content: space-between;
-  font-family: Open Sans;
+  grid-area: route;
+}
+
+.durationTitle {
+  grid-area: duration-title;
+}
+
+.stopsCount {
+  grid-area: stops-count;
+}
+
+.route,
+.durationTitle,
+.stopsCount {
+  color: #a0b0b9;
+  text-transform: uppercase;
+  font-weight: 600;
   font-size: 12px;
   line-height: 18px;
   letter-spacing: 0.5px;
-  color: rgba(160, 176, 185, 1);
 }
 
 .time {
-  color: $text-color;
+  grid-area: time;
 }
 
-.details {
-  display: flex;
-  justify-content: space-between;
-  font-size: 12px;
-  color: #a0b0b9;
+.duration {
+  grid-area: duration;
 }
 
-.transfers {
-  text-transform: uppercase;
-  color: rgba(160, 176, 185, 1);
+.stopsCities {
+  grid-area: stops-cities;
 }
 
-.transferCities {
-  font-size: 12px;
-  color: $text-color;
+.time,
+.duration,
+.stopsCities {
+  font-size: 14px;
+  line-height: 21px;
+  letter-spacing: 0px;
+  color: rgba(74, 74, 74, 1);
 }

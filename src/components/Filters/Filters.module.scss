@@ -3,7 +3,7 @@
 .filters {
   background: $secondary-color;
   padding: 15px;
-  border-radius: 10px;
+  border-radius: 5px;
   box-shadow: $box-shadow;
   align-self: flex-start;
 
@@ -13,6 +13,7 @@
     font-size: 16px;
     font-weight: bold;
   }
+
   p {
     text-transform: uppercase;
     font-size: 12px;
@@ -27,6 +28,8 @@
     margin-bottom: 8px;
     cursor: pointer;
     padding: 5px;
+    padding-left: 0;
+    margin-left: 0;
     border-radius: 5px;
     transition: background 0.3s;
     font-size: 13px;
@@ -36,9 +39,21 @@
     &:hover {
       background: rgba(42, 134, 255, 0.1);
     }
+  }
 
-    input {
-      transform: scale(1.2);
+  input[type="checkbox"] {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    background-image: url("../../assets/images/checkbox_unchecked.svg");
+    background-size: cover;
+    background-position: center;
+    cursor: pointer;
+    transition: background-image 0.2s ease-in-out;
+    margin-left: 0;
+
+    &:checked {
+      background-image: url("../../assets/images/checkbox_checked.svg");
     }
   }
 }
