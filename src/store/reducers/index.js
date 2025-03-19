@@ -1,7 +1,7 @@
 import { combineReducers } from "@reduxjs/toolkit";
-import filterReducer from "./reducers/filterReducer";
-import sortReducer from "./reducers/sortReducer";
-import ticketReducer from "./reducers/ticketReducer";
+import filterReducer from "./filterReducer";
+import sortReducer from "./sortReducer";
+import ticketReducer from "./ticketReducer";
 
 const rootReducer = combineReducers({
   filters: filterReducer,

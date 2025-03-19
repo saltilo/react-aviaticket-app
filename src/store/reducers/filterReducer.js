@@ -2,10 +2,7 @@ import { SET_FILTERS, TOGGLE_FILTER } from "../actions/filterActions";
 
 const initialState = {
   all: true,
-  noTransfers: true,
-  oneTransfer: true,
-  twoTransfers: true,
-  threeTransfers: true,
+  transfers: { 0: true, 1: true, 2: true, 3: true },
 };
 
 const filterReducer = (state = initialState, action) => {
@@ -16,29 +13,18 @@ const filterReducer = (state = initialState, action) => {
     case TOGGLE_FILTER:
       const updatedFilters = {
         ...state,
-        [action.payload]: !state[action.payload],
+        transfers: {
+          ...state.transfers,
+          [action.payload]: !state.transfers[action.payload],
+        },
       };
 
-      if (action.payload === "all") {
-        return {
-          all: !state.all,
-          noTransfers: !state.all,
-          oneTransfer: !state.all,
-          twoTransfers: !state.all,
-          threeTransfers: !state.all,
-        };
-      } else {
-        const allFiltersChecked =
-          updatedFilters.noTransfers &&
-          updatedFilters.oneTransfer &&
-          updatedFilters.twoTransfers &&
-          updatedFilters.threeTransfers;
+      const allFiltersChecked = Object.values(updatedFilters.transfers).every(
+        Boolean
+      );
+      updatedFilters.all = allFiltersChecked;
 
-        return {
-          ...updatedFilters,
-          all: allFiltersChecked,
-        };
-      }
+      return updatedFilters;
 
     default:
       return state;
