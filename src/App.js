@@ -5,23 +5,55 @@ import Header from "./components/Header/Header";
 import Filters from "./components/Filters/Filters";
 import Tabs from "./components/Tabs/Tabs";
 import TicketList from "./components/TicketList/TicketList";
+import ScrollToTopButton from "./components/ScrollToTopButton/ScrollToTopButton";
 import "./styles/global.scss";
 import styles from "./App.module.scss";
+import "antd/dist/reset.css";
 
 const App = () => {
   const dispatch = useDispatch();
   const searchId = useSelector((state) => state.tickets.searchId);
-  const stop = useSelector((state) => state.tickets.stop);
+  const allTickets = useSelector((state) => state.tickets.allTickets);
 
   useEffect(() => {
     dispatch(fetchSearchId());
   }, [dispatch]);
 
   useEffect(() => {
-    if (searchId && !stop) {
-      dispatch(fetchTickets(searchId));
-    }
-  }, [dispatch, searchId, stop]);
+    const loadTickets = async () => {
+      if (!searchId) return;
+
+      try {
+        let stopLoading = false;
+
+        while (!stopLoading) {
+          if (allTickets.length >= 10000) {
+            stopLoading = true;
+            break;
+          }
+
+          const resultAction = await dispatch(fetchTickets(searchId));
+
+          if (fetchTickets.rejected.match(resultAction)) {
+            await new Promise((resolve) => setTimeout(resolve, 500));
+            continue;
+          }
+
+          const payload = resultAction.payload;
+
+          if (payload?.stop) {
+            stopLoading = true;
+          }
+
+          await new Promise((resolve) => setTimeout(resolve, 300));
+        }
+      } catch (error) {
+        console.error("Ошибка загрузки билетов:", error);
+      }
+    };
+
+    loadTickets();
+  }, [dispatch, searchId, allTickets.length]);
 
   return (
     <div className={styles.app}>
@@ -33,6 +65,7 @@ const App = () => {
           <TicketList />
         </div>
       </div>
+      <ScrollToTopButton />
     </div>
   );
 };

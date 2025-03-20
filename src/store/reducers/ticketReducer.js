@@ -21,9 +21,8 @@ const ticketSlice = createSlice({
   initialState,
   reducers: {
     loadMoreTickets: (state) => {
-      const newCount = state.ticketsCount + 5;
-      state.visibleTickets = state.allTickets.slice(0, newCount);
-      state.ticketsCount = newCount;
+      state.ticketsCount += 5;
+      state.visibleTickets = state.allTickets.slice(0, state.ticketsCount);
     },
     toggleFilter: (state, action) => {
       const filterName = action.payload;
@@ -58,10 +57,25 @@ const ticketSlice = createSlice({
         state.error = null;
       })
       .addCase(fetchTickets.fulfilled, (state, action) => {
-        state.allTickets = [...state.allTickets, ...action.payload.tickets];
-        state.visibleTickets = state.allTickets.slice(0, state.ticketsCount);
-        state.stop = action.payload.stop;
-        state.loading = false;
+        const newTickets = action.payload.tickets;
+
+        if (state.allTickets.length >= 10000) {
+          state.stop = true;
+          state.loading = false;
+          return;
+        }
+
+        const updatedTickets = [...state.allTickets, ...newTickets].slice(
+          0,
+          10000
+        );
+        state.allTickets = updatedTickets;
+        state.visibleTickets = updatedTickets.slice(0, state.ticketsCount);
+
+        if (action.payload.stop || updatedTickets.length >= 10000) {
+          state.stop = true;
+          state.loading = false;
+        }
       })
       .addCase(fetchTickets.rejected, (state, action) => {
         state.error = action.payload;

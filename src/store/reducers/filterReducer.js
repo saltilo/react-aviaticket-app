@@ -11,20 +11,33 @@ const filterReducer = (state = initialState, action) => {
       return { ...state, ...action.payload };
 
     case TOGGLE_FILTER:
-      const updatedFilters = {
-        ...state,
-        transfers: {
+      const filterName = action.payload;
+
+      if (filterName === "all") {
+        const newAllValue = !state.all;
+
+        return {
+          all: newAllValue,
+          transfers: {
+            0: newAllValue,
+            1: newAllValue,
+            2: newAllValue,
+            3: newAllValue,
+          },
+        };
+      } else {
+        const updatedTransfers = {
           ...state.transfers,
-          [action.payload]: !state.transfers[action.payload],
-        },
-      };
+          [filterName]: !state.transfers[filterName],
+        };
 
-      const allFiltersChecked = Object.values(updatedFilters.transfers).every(
-        Boolean
-      );
-      updatedFilters.all = allFiltersChecked;
+        const allChecked = Object.values(updatedTransfers).every(Boolean);
 
-      return updatedFilters;
+        return {
+          all: allChecked,
+          transfers: updatedTransfers,
+        };
+      }
 
     default:
       return state;

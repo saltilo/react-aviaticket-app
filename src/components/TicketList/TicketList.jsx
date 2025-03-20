@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { useSelector } from "react-redux";
 import styles from "./TicketList.module.scss";
 import TicketCard from "./TicketCard/TicketCard";
@@ -6,55 +6,50 @@ import LoadMoreButton from "../LoadMoreButton/LoadMoreButton";
 
 const TicketList = () => {
   const tickets = useSelector((state) => state.tickets.visibleTickets);
-  const loading = useSelector((state) => state.tickets.loading);
-  const error = useSelector((state) => state.tickets.error);
   const filters = useSelector((state) => state.filters);
   const sortType = useSelector((state) => state.sort.sortType);
 
-  const filteredTickets = filters.all
-    ? tickets
-    : tickets.filter((ticket) =>
-        ticket.segments.some(
-          (segment) => filters.transfers[segment.stops?.length ?? 0]
-        )
-      );
+  const filteredTickets = useMemo(() => {
+    if (filters.all) return tickets;
+    return tickets.filter((ticket) =>
+      ticket.segments.some(
+        (segment) => filters.transfers[segment.stops?.length ?? 0]
+      )
+    );
+  }, [tickets, filters]);
 
-  const sortTickets = (tickets, sortType) => {
+  const sortedFilteredTickets = useMemo(() => {
     switch (sortType) {
       case "cheapest":
-        return [...tickets].sort((a, b) => a.price - b.price);
+        return [...filteredTickets].sort((a, b) => a.price - b.price);
       case "fastest":
-        return [...tickets].sort(
+        return [...filteredTickets].sort(
           (a, b) =>
-            a.segments.reduce((acc, segment) => acc + segment.duration, 0) -
-            b.segments.reduce((acc, segment) => acc + segment.duration, 0)
+            a.segments.reduce((acc, s) => acc + s.duration, 0) -
+            b.segments.reduce((acc, s) => acc + s.duration, 0)
         );
       case "optimal":
-        return [...tickets].sort(
-          (a, b) =>
-            (a.price +
-              a.segments.reduce((acc, segment) => acc + segment.duration, 0)) /
-              2 -
-            (b.price +
-              b.segments.reduce((acc, segment) => acc + segment.duration, 0)) /
-              2
-        );
+        return [...filteredTickets].sort((a, b) => {
+          const aTime = a.segments.reduce((acc, s) => acc + s.duration, 0);
+          const bTime = b.segments.reduce((acc, s) => acc + s.duration, 0);
+          return a.price + aTime - (b.price + bTime);
+        });
       default:
-        return tickets;
+        return filteredTickets;
     }
-  };
+  }, [filteredTickets, sortType]);
 
-  const sortedFilteredTickets = sortTickets(filteredTickets, sortType);
-
-  if (loading) return <p>Загрузка билетов...</p>;
-  if (error) return <p className={styles.error}>Ошибка загрузки: {error}</p>;
-  if (!sortedFilteredTickets.length)
+  if (!sortedFilteredTickets.length) {
     return <p>Рейсов, подходящих под заданные фильтры, не найдено</p>;
+  }
 
   return (
     <div className={styles.ticketList}>
       {sortedFilteredTickets.map((ticket, index) => (
-        <TicketCard key={index} ticket={ticket} />
+        <TicketCard
+          key={`${ticket.carrier}-${ticket.price}-${index}`}
+          ticket={ticket}
+        />
       ))}
       <LoadMoreButton />
     </div>

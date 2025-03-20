@@ -27,7 +27,13 @@ const Tabs = () => {
         onClick={() => handleSortChange("fastest")}>
         Самый быстрый
       </button>
-      <button className={styles.btn}>Оптимальный</button>
+      <button
+        className={`${styles.btn} ${
+          sortType === "optimal" ? styles.active : ""
+        }`}
+        onClick={() => handleSortChange("optimal")}>
+        Оптимальный
+      </button>
     </div>
   );
 };

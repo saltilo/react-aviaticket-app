@@ -22,16 +22,21 @@ const Filters = () => {
   return (
     <div className={styles.filters}>
       <p>Количество пересадок</p>
-      {checkboxes.map(({ name, label }) => (
-        <label key={name}>
-          <input
-            type="checkbox"
-            checked={filters[name] ?? filters.transfers[name]}
-            onChange={() => handleCheckboxChange(name)}
-          />
-          {label}
-        </label>
-      ))}
+      {checkboxes.map(({ name, label }) => {
+        const isChecked =
+          name === "all" ? filters.all : filters.transfers[name];
+
+        return (
+          <label key={name}>
+            <input
+              type="checkbox"
+              checked={isChecked}
+              onChange={() => handleCheckboxChange(name)}
+            />
+            {label}
+          </label>
+        );
+      })}
     </div>
   );
 };

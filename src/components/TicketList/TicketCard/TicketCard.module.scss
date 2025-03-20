@@ -1,9 +1,9 @@
 @import "../../../styles/variables";
 
 .ticketCard {
-  background: #fff;
+  background: $secondary-color;
   border-radius: $border-radius;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: $box-shadow;
   display: flex;
   flex-direction: column;
   gap: 20px;
